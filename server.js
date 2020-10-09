@@ -18,7 +18,7 @@ app.use(express.static("public"));
 // GET: Create the API route to GET /api/notes from the db.json file, and return saved notes as JSON
 let noteData = fs.readFileSync(path.join(__dirname,"db.json"),"utf8");
 noteData = JSON.parse(noteData);
-console.log(noteData);
+// console.log(noteData);
 
 let noteId=0;
 
@@ -37,13 +37,13 @@ app.get("/notes", function(req, res) {
     res.sendFile(path.join(__dirname,"notes.html"));
 });
 
-// Create the wildcard
-app.get("*", function(req, res) {
-    res.sendFile(path.join(__dirname,"index.html"));
-});
-
 //Put the data on the page
 app.post("noteData")
+
+app.get("/api/notes", function(req,res) {
+    console.log("This is the note data variable: " + noteData);
+    res.json(noteData.notes)
+})
 
 
 
@@ -58,6 +58,11 @@ app.post("/notes",function(req,res){
     fs.writeFileSync(path.join(__dirname,"/db.json"),JSON.stringify(newNoteObj,null,2));
     console.log(newNoteObj)
 })
+
+// Create the wildcard
+app.get("*", function(req, res) {
+    res.sendFile(path.join(__dirname,"index.html"));
+});
 
 //TODO: DELETE: api/notes/:id should recieve a query parameter with the note ID to be deleted. HINT: Read all notes from the file, remove the note with the correct ID, and then rewrite the db.json
 
