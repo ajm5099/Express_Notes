@@ -8,13 +8,19 @@ const PORT = process.env.PORT || 3000;
 const path = require("path")
 
 //================================================================
-//Data Handlers
+//Data Handlers and variables
 //================================================================
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
-
+let notesData = [
+    {
+        title:"important new note",
+        text:"this is the body of the note we wish to take",
+        id: 1
+    }
+];
 
 
 //================================================================
@@ -22,13 +28,13 @@ app.use(express.static("public"));
 //================================================================
 
 //TODO: Create the get route that will return index.html file using GET*
-app.get("/index.html", function(req, res) {
-    res.send('Note taking API is working')
+app.get("/", function(req, res) {
+    res.sendFile(path.join(__dirname,"index.html"))
 });
 
 //TODO: Create the get route for the notes.html file
-app.get("/notes.html", function(req, res) {
-    res.send('Note taking API is working')
+app.get("/notes", function(req, res) {
+    res.sendFile(path.join(__dirname,"notes.html"));
 });
 
 //TODO: GET: Create the API route to GET /api/notes from the db.json file, and return saved notes as JSON
