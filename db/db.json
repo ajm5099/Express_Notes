@@ -4,7 +4,8 @@
             "title": "Test Title",
             "text": "Test text",
             //TODO: Need a way to write a unique ID to each note
-            "id": 
+            "id": 0
         }
-    ]
+    ],
+    "noteId": 1
 }

@@ -10,6 +10,9 @@ dbData = JSON.parse(dbData);
 //Array of notes
 let notes = dbData.notes;
 
+//Note ID
+let lastId = dbData.lastId;
+
 //route to get the notes from the server
 router.get("/notes",function(req,res){
     res.json(notesData)
@@ -25,6 +28,7 @@ router.post("/notes",function(req,res) {
     notes.push(req.body)
     const newDbState = {
         notes:notesData
+        lastId:lastId
     }
     fs.writeFileSync(path.join(__dirname, "../db/db.json"),JSON.stringify(newDbState, null, 2));
 })
