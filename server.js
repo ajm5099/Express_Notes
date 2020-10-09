@@ -24,7 +24,7 @@ let noteId=0;
 
 
 //================================================================
-//Get and Post activities
+//Routes
 //================================================================
 
 // Create the get route that will return index.html file using GET*
@@ -36,6 +36,14 @@ app.get("/", function(req, res) {
 app.get("/notes", function(req, res) {
     res.sendFile(path.join(__dirname,"notes.html"));
 });
+
+// Create the wildcard
+app.get("*", function(req, res) {
+    res.sendFile(path.join(__dirname,"index.html"));
+});
+
+//Put the data on the page
+app.post("noteData")
 
 
 
