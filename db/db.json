@@ -2,7 +2,9 @@
     "notes": [
         {
             "title": "Test Title",
-            "text": "Test text"
+            "text": "Test text",
+            //TODO: Need a way to write a unique ID to each note
+            "id": 
         }
     ]
 }
