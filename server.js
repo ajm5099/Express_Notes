@@ -56,6 +56,7 @@ app.post("/notes",function(req,res){
     }
     noteId++;
     fs.writeFileSync(path.join(__dirname,"/db.json"),JSON.stringify(newNoteObj,null,2));
+    console.log(newNoteObj)
 })
 
 //TODO: DELETE: api/notes/:id should recieve a query parameter with the note ID to be deleted. HINT: Read all notes from the file, remove the note with the correct ID, and then rewrite the db.json
