@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // GET: Create the API route to GET /api/notes from the db.json file, and return saved notes as JSON
-let noteData = fs.readFileSync(path.join(__dirname,"db.json"),"utf8");
+let noteData = fs.readFileSync(path.join(__dirname, "db.json"), "utf8");
 noteData = JSON.parse(noteData);
 // console.log(noteData);
 
@@ -28,18 +28,18 @@ noteData = JSON.parse(noteData);
 //================================================================
 
 // Create the get route that will return index.html file using GET*
-app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname,"index.html"))
+app.get("/", function (req, res) {
+    res.sendFile(path.join(__dirname, "index.html"))
 });
 
 // Create the get route for the notes.html file
-app.get("/notes", function(req, res) {
-    res.sendFile(path.join(__dirname,"notes.html"));
+app.get("/notes", function (req, res) {
+    res.sendFile(path.join(__dirname, "notes.html"));
 });
 
 //Put the data on the page
 
-app.get("/api/notes", function(req,res) {
+app.get("/api/notes", function (req, res) {
     console.log("This is the note data variable: " + noteData);
     res.json(noteData.notes)
 })
@@ -48,35 +48,35 @@ app.get("/api/notes", function(req,res) {
 
 //TODO: POST: Create API route for api/notes that should recieve a new note to save on the request body, add it to db.json, and return the new note to the client
 
-app.post("/api/notes",function(req,res){
-    let id= Date.now()
-    const newNoteObj= {
-        title:req.body.title,
+app.post("/api/notes", function (req, res) {
+    let id = Date.now()
+    const newNoteObj = {
+        title: req.body.title,
         text: req.body.text,
         id: id
     }
     noteData.notes.push(newNoteObj);
-    fs.writeFileSync(path.join(__dirname,"/db.json"),JSON.stringify(noteData,null,2));
+    fs.writeFileSync(path.join(__dirname, "/db.json"), JSON.stringify(noteData, null, 2));
     console.log(newNoteObj)
     res.json(newNoteObj);
 })
 
 // Create the wildcard
-app.get("*", function(req, res) {
-    res.sendFile(path.join(__dirname,"index.html"));
+app.get("*", function (req, res) {
+    res.sendFile(path.join(__dirname, "index.html"));
 });
 
 //TODO: DELETE: api/notes/:id should recieve a query parameter with the note ID to be deleted. HINT: Read all notes from the file, remove the note with the correct ID, and then rewrite the db.json
 
-app.delete("/api/notes/:id",function(req,res){
+app.delete("/api/notes/:id", function (req, res) {
     const id = req.params.id
-    noteData.notes.forEach(note => {
-        if (note.id === id)
-        {return delete note}
-    });
-    console.log(noteData)
-    fs.writeFileSync(path.join(__dirname,"/db.json"),JSON.stringify(noteData,null,2)); 
-    res.json(id)  
+
+    const newNote = noteData.notes.filter(note => {
+        return note.id != id
+    })
+    noteData.notes = newNote;
+    fs.writeFileSync(path.join(__dirname, "/db.json"), JSON.stringify(noteData, null, 2));
+res.json(id)
 });
 
 
@@ -84,6 +84,6 @@ app.delete("/api/notes/:id",function(req,res){
 //================================================================
 //Listeners
 //================================================================
-app.listen(PORT, function() {
+app.listen(PORT, function () {
     console.log("App listening on PORT " + PORT);
 })
