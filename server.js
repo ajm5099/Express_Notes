@@ -20,7 +20,7 @@ let noteData = fs.readFileSync(path.join(__dirname,"db.json"),"utf8");
 noteData = JSON.parse(noteData);
 // console.log(noteData);
 
-let noteId=0;
+
 
 
 //================================================================
@@ -47,17 +47,18 @@ app.get("/api/notes", function(req,res) {
 
 
 //TODO: POST: Create API route for api/notes that should recieve a new note to save on the request body, add it to db.json, and return the new note to the client
+
 app.post("/api/notes",function(req,res){
+    let id= Date.now()
     const newNoteObj= {
-        title: "hello new note"
-        text: "another new note"
-        // title:req.body.noteTitle,
-        // text: req.body.noteText,
-        id: noteId+1
+        title:req.body.title,
+        text: req.body.text,
+        id: id
     }
-    noteId++;
-    fs.writeFileSync(path.join(__dirname,"/db.json"),JSON.stringify(newNoteObj,null,2));
+    noteData.notes.push(newNoteObj);
+    fs.writeFileSync(path.join(__dirname,"/db.json"),JSON.stringify(noteData,null,2));
     console.log(newNoteObj)
+    res.json(newNoteObj);
 })
 
 // Create the wildcard
@@ -66,6 +67,19 @@ app.get("*", function(req, res) {
 });
 
 //TODO: DELETE: api/notes/:id should recieve a query parameter with the note ID to be deleted. HINT: Read all notes from the file, remove the note with the correct ID, and then rewrite the db.json
+
+app.delete("/api/notes/:id",function(req,res){
+    const id = req.params.id
+    noteData.notes.forEach(note => {
+        if (note.id === id)
+        {return delete note}
+    });
+    console.log(noteData)
+    fs.writeFileSync(path.join(__dirname,"/db.json"),JSON.stringify(noteData,null,2)); 
+    res.json(id)  
+});
+
+
 
 //================================================================
 //Listeners
