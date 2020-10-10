@@ -25,12 +25,12 @@ noteData = JSON.parse(noteData);
 
 // Create the get route that will return index.html file using GET
 app.get("/", function (req, res) {
-    res.sendFile(path.join(__dirname, "index.html"))
+    res.sendFile(path.join(__dirname, "./public/index.html"))
 });
 
 // Create the get route for the notes.html file
 app.get("/notes", function (req, res) {
-    res.sendFile(path.join(__dirname, "notes.html"));
+    res.sendFile(path.join(__dirname, "./public/notes.html"));
 });
 
 //Put the data on the page
@@ -56,7 +56,7 @@ app.post("/api/notes", function (req, res) {
 
 // Create the wildcard
 app.get("*", function (req, res) {
-    res.sendFile(path.join(__dirname, "index.html"));
+    res.sendFile(path.join(__dirname, "./public/index.html"));
 });
 
 //DELETE: api/notes/:id should recieve a query parameter with the note ID to be deleted. HINT: Read all notes from the file, remove the note with the correct ID, and then rewrite the db.json
