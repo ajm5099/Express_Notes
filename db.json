@@ -1,3 +1,9 @@
 {
-  "notes": []
+  "notes": [
+    {
+      "title": "new note",
+      "text": "this is a new note",
+      "id": 1602298589064
+    }
+  ]
 }
