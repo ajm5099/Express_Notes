@@ -38,7 +38,6 @@ app.get("/notes", function(req, res) {
 });
 
 //Put the data on the page
-app.post("noteData")
 
 app.get("/api/notes", function(req,res) {
     console.log("This is the note data variable: " + noteData);
@@ -48,10 +47,12 @@ app.get("/api/notes", function(req,res) {
 
 
 //TODO: POST: Create API route for api/notes that should recieve a new note to save on the request body, add it to db.json, and return the new note to the client
-app.post("/notes",function(req,res){
+app.post("/api/notes",function(req,res){
     const newNoteObj= {
-        title:req.body.title,
-        text: req.body.text,
+        title: "hello new note"
+        text: "another new note"
+        // title:req.body.noteTitle,
+        // text: req.body.noteText,
         id: noteId+1
     }
     noteId++;
