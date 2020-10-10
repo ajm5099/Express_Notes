@@ -23,7 +23,7 @@ noteData = JSON.parse(noteData);
 //Routes
 //================================================================
 
-// Create the get route that will return index.html file using GET*
+// Create the get route that will return index.html file using GET
 app.get("/", function (req, res) {
     res.sendFile(path.join(__dirname, "index.html"))
 });
